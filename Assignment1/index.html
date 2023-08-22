@@ -1,42 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment1</title>
+    <link rel="stylesheet" href="./css/stylesheet.css">
 </head>
+
 <body>
-    <h1>Fill this form.</h1>
+    <h1>FORM</h1>
     <form>
-        <div class="form-item">
-            <label for="name">Enter your name: </label>
+        <label for="name">Name: </label>
+        <div class="form-item-input">
             <input type="text" name="name" id="name">
-            <div id="nameErrorContainer"></div>
+            <div id="nameErrorContainer" class="error-message-color"></div>
         </div>
+        <label for="address">Address: </label>
+        <div class="form-item-input">
+            <textarea id="address" name="address" rows="4" cols="50"></textarea>
+            <div id="addressErrorContainer" class="error-message-color"></div>
+        </div>
+        <label for="dob">DOB: </label>
+        <div class="form-item-input">
+            <input type="date" name="dob" id="dob">
+            <div id="dateErrorContainer" class="error-message-color"></div>
+        </div>
+        <label for="age">Age: </label>
+        <div class="form-item-input">
+            <select id="age" name="age">
+                <option value="1to18">Select a option</option>
+                <option value="1to18">1-18</option>
+                <option value="18to34">18-34</option>
+                <option value="35to45">35-45</option>
+                <option value="45to54">45-54</option>
+                <option value="54to65">54-65</option>
+                <option value="Above65">Above 65</option>
+            </select>
+            <div id="AgeErrorContainer" class="error-message-color"></div>
+        </div>
+        <label for="gender">Gender: </label>
+        <div class="form-item-input">
+            <input type="radio" id="male" name="gender" value="male">Male
+            <input type="radio" id="female" name="gender" value="female">Female
+            <input type="radio" id="other" name="gender" value="other">Other
+            <div id="genderErrorContainer" class="error-message-color"></div>
+        </div>
+        <div id="terms-container"><input type="checkbox" id="terms" name="terms" value="terms">Agree to terms and conditions.</div>
         <div class="form-item">
-            <label for="phone">Enter your phone number: </label>
-            <input type="text" name="phone" id="phone">
-            <div id="phoneErrorContainer"></div>
+            <div id="termsErrorContainer" class="error-message-color"></div>
         </div>
-        <div class="form-item">
-            <label for="place">Enter your place: </label>
-            <input type="text" name="place" id="place">
-            <div id="placeErrorContainer"></div>
-        </div>
-        <div class="form-item">
-            <label for="company">Enter your company name: </label>
-            <input type="text" name="company" id="company">
-            <div id="companyErrorContainer"></div>
-        </div>
-        <div class="form-item">
-            <label for="pincode">Enter your pincode: </label>
-            <input type="text" name="pincode" id="pincode">
-            <div id="pincodeErrorContainer"></div>
-        </div>
-        <button id="formSubmitBtn" name="formSubmitBtn" type="button">Submit</button>
-        <button id="prepopulateBtn" name="prepopulateBtn" type="button">Prepopulate</button>
+        <br>
     </form>
+    <button id="formSubmitBtn" name="formSubmitBtn" type="button">Submit</button>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="./js/script.js"></script>
 </body>
+
 </html>

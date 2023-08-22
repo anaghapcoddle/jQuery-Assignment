@@ -1,11 +1,8 @@
-form{
-    display: table;
+form {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }
 
-.form-item{
-    display: table-row;
-}
-
-label,input {
-  display: table-cell;
+.error-message-color{
+  color: red;
 }
