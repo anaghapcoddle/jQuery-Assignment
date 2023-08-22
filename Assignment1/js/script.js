@@ -17,8 +17,8 @@ Test your form with different input scenarios to ensure that validation works as
 
 $(document).ready(function () {
 
-  function validateForm() {
-
+  function validateForm(event) {
+    event.preventDefault();
     const name = $("#name").val();
     const address = $('#address').val();
     const dob = $("#dob").val();
@@ -26,14 +26,10 @@ $(document).ready(function () {
     const gender = $('input[name="gender"]:checked').val();
     let isChecked = $('#terms').is(':checked');
 
-    console.log(name);
-    console.log(address);
-    console.log(dob);
-    console.log(age);
-    console.log(gender);
-    console.log(isChecked);
-
     valid = true;
+
+    $('.error-message').text('');
+
     if (name === '' || name == null) {
       $('#nameErrorContainer').text('This field is required.');
       valid = false;
@@ -48,6 +44,10 @@ $(document).ready(function () {
       $('#dateErrorContainer').text('This field is required.');
       valid = false;
     }
+    if (age === 'noOptionSelected') {
+      $('#AgeErrorContainer').text('This field is required.');
+      valid = false;
+    }
     if (gender === '' || gender == null) {
       $('#genderErrorContainer').text('This field is required.');
       valid = false;
@@ -57,9 +57,7 @@ $(document).ready(function () {
       valid = false;
     }
   }
-
-  $('button').click(function () {
-    validateForm();
-  });
+  
+  $('#validateForm').on("submit", validateForm);
 
 });
