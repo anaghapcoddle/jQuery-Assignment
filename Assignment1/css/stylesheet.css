@@ -1,8 +1,36 @@
-form {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e3dddd;
 }
 
-.error-message{
+#container {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  text-decoration: underline;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 20px;
+  justify-content: center;
+  grid-template-rows: 50px 100px 50px 50px 50px 50px 50px;
+}
+
+.span-row {
+  grid-column: 1 / span 2; 
+}
+
+.error-message {
   color: red;
+}
+
+#formSubmitBtn {
+  width: 150px;
 }
