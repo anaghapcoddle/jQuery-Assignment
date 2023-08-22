@@ -56,10 +56,6 @@ $(document).ready(function () {
       $('#termsErrorContainer').text('Agree to terms and conditions to continue.');
       valid = false;
     }
-
-    inputs.forEach((input) => {
-      input.value = "";
-    });
   }
 
   $('button').click(function () {
