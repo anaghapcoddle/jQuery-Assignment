@@ -1,0 +1,11 @@
+form{
+    display: table;
+}
+
+.form-item{
+    display: table-row;
+}
+
+label,input {
+  display: table-cell;
+}
