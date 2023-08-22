@@ -9,50 +9,53 @@
 </head>
 
 <body>
-    <h1>FORM</h1>
-    <form id="validateForm">
-        <label for="name">Name: </label>
-        <div class="form-item-input">
-            <input type="text" name="name" id="name">
-            <div id="nameErrorContainer" class="error-message"></div>
-        </div>
-        <label for="address">Address: </label>
-        <div class="form-item-input">
-            <textarea id="address" name="address" rows="4" cols="50"></textarea>
-            <div id="addressErrorContainer" class="error-message"></div>
-        </div>
-        <label for="dob">DOB: </label>
-        <div class="form-item-input">
-            <input type="date" name="dob" id="dob">
-            <div id="dateErrorContainer" class="error-messager"></div>
-        </div>
-        <label for="age">Age: </label>
-        <div class="form-item-input">
-            <select id="age" name="age">
-                <option value="noOptionSelected">Select a option</option>
-                <option value="1to18">1-18</option>
-                <option value="18to34">18-34</option>
-                <option value="35to45">35-45</option>
-                <option value="45to54">45-54</option>
-                <option value="54to65">54-65</option>
-                <option value="Above65">Above 65</option>
-            </select>
-            <div id="AgeErrorContainer" class="error-message"></div>
-        </div>
-        <label for="gender">Gender: </label>
-        <div class="form-item-input">
-            <input type="radio" id="male" name="gender" value="male">Male
-            <input type="radio" id="female" name="gender" value="female">Female
-            <input type="radio" id="other" name="gender" value="other">Other
-            <div id="genderErrorContainer" class="error-message"></div>
-        </div>
-        <div id="terms-container"><input type="checkbox" id="terms" name="terms" value="terms">Agree to terms and conditions.</div>
-        <div class="form-item">
-            <div id="termsErrorContainer" class="error-message"></div>
-        </div>
-        
-        <input type="submit" id="formSubmitBtn" name="formSubmitBtn" >
+    <div id="container">
+        <h1>FORM</h1>
+        <form id="validateForm">
+            <label for="name">Name: </label>
+            <div class="form-item-input">
+                <input type="text" name="name" id="name">
+                <div id="nameErrorContainer" class="error-message"></div>
+            </div>
+            <label for="address">Address: </label>
+            <div class="form-item-input">
+                <textarea id="address" name="address" rows="4" cols="50"></textarea>
+                <div id="addressErrorContainer" class="error-message"></div>
+            </div>
+            <label for="dob">DOB: </label>
+            <div class="form-item-input">
+                <input type="date" name="dob" id="dob">
+                <div id="dateErrorContainer" class="error-message"></div>
+            </div>
+            <label for="age">Age: </label>
+            <div class="form-item-input">
+                <select id="age" name="age">
+                    <option value="noOptionSelected">Select a option</option>
+                    <option value="1to18">1-18</option>
+                    <option value="18to34">18-34</option>
+                    <option value="35to45">35-45</option>
+                    <option value="45to54">45-54</option>
+                    <option value="54to65">54-65</option>
+                    <option value="Above65">Above 65</option>
+                </select>
+                <div id="AgeErrorContainer" class="error-message"></div>
+            </div>
+            <label for="gender">Gender: </label>
+            <div class="form-item-input">
+                <input type="radio" id="male" name="gender" value="male">Male
+                <input type="radio" id="female" name="gender" value="female">Female
+                <input type="radio" id="other" name="gender" value="other">Other
+                <div id="genderErrorContainer" class="error-message"></div>
+            </div>
+            <div class="form-item-input span-row">
+                <input type="checkbox" id="terms" name="terms" value="terms">Agree to terms and conditions.
+                <div id="termsErrorContainer" class="error-message"></div>
+            </div>
+            <div class="form-item-input span-row"><input type="submit" id="formSubmitBtn" name="formSubmitBtn"></div>
+    </div>
+
     </form>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="./js/script.js"></script>
 </body>
