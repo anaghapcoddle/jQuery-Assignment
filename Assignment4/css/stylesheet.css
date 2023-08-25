@@ -1,0 +1,38 @@
+h1 {
+    display: inline;
+}
+
+#shopping-site-body {
+    display: flex;
+}
+
+#products-container {
+    background-color: rgb(255, 195, 195);
+}
+
+#cart {
+    background-color: rgb(209, 209, 220);
+}
+
+.product {
+    display: flex;
+}
+
+.image-container {
+    height: 290px;
+    width: 423px;
+}
+
+img{
+    height: auto;
+    width: 100%;
+}
+
+ul {
+    list-style-type: disc;
+  }
+
+.product-details{
+    display: flex;
+    flex-direction: column;
+}
