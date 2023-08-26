@@ -1,13 +1,18 @@
+body{
+    margin: 0;
+}
+
 h1 {
     display: inline;
 }
 
 #shopping-site-body {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
 }
 
 #products-container {
-    background-color: rgb(255, 195, 195);
+    /* background-color: rgb(255, 195, 195); */
 }
 
 #cart {
@@ -15,7 +20,8 @@ h1 {
 }
 
 .product {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
 }
 
 .image-container {
@@ -36,3 +42,8 @@ ul {
     display: flex;
     flex-direction: column;
 }
+
+.product-price {
+    display: flex; 
+    justify-content: center; 
+  }
