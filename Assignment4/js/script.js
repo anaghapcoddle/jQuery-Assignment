@@ -2,12 +2,12 @@
 $(document).ready(function () {
 
   $("#searchbox").keyup(function () {
-    let inputValue = $(this).val();
+    let inputValue = $(this).val().toLowerCase();
     var allHidden = true;
     $("p").empty();
     $(".product").each(function () {
-      
-      let productName = $(this).find(".product-details .product-name").text();
+
+      let productName = $(this).find(".product-details .product-name").text().toLowerCase();
 
       if (productName.includes(inputValue)) {
         $(this).show();
@@ -19,8 +19,8 @@ $(document).ready(function () {
       }
     });
     if (allHidden) {
-      $("#products-container").append( "<p>No products to show.</p>" )
-    } 
+      $("#products-container").append("<p>No products to show.</p>")
+    }
   })
 
 
@@ -43,7 +43,7 @@ $(document).ready(function () {
     $("#cart-body").empty();
 
     $.each(cartItems, function (index, item) {
-      
+
       let cartElement = $("<div>");
       $("#cart-body").append(cartElement);
       cartElement.append(item.title);
@@ -55,10 +55,11 @@ $(document).ready(function () {
         item.itemquantity = item.itemquantity - 1;
         if (item.itemquantity < 1) {
           cartElement.remove();
-          item.itemquantity = 1;
+          cartItems = cartItems.filter(obj => obj.title !== item.title);
         } else {
           quantityContainer.text(item.itemquantity);
         }
+        console.log(cartElement.text());
       });
 
       let quantityContainer = $("<span>", {
