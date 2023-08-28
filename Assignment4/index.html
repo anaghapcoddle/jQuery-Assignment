@@ -7,6 +7,7 @@
     <title>SHOP EASY</title>
     <link rel="stylesheet" href="./css/stylesheet.css">
     <script src="./js/jquery-3.7.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/3f87ddcdd4.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -14,12 +15,12 @@
         <header>
             <h1>SHOP EASY</h1>
             <input type="text" name="searchbox" id="searchbox" placeholder="Search here">
-        </div>
+        </header>
         <div id="shopping-site-body">
             <div id="products-container">
                 <div id="tv" class="product">
                     <div class="image-container">
-                        <img src="./images/tv.jpg" alt="">
+                        <img src="./images/tv.jpg" alt="Image could not be displayed.">
                     </div>
                     <div class="product-details">
                         <h2 class="product-name">Sony Television </h2>
@@ -36,7 +37,7 @@
                 </div>
                 <div id="camera" class="product">
                     <div class="image-container">
-                        <img src="./images/camera.jpg" alt="">
+                        <img src="./images/camera.jpg" alt="Image could not be displayed.">
                     </div>
                     <div class="product-details">
                         <h2 class="product-name">Canon SLR Camera</h2>
@@ -53,7 +54,7 @@
                 </div>
                 <div id="laptop" class="product">
                     <div class="image-container">
-                        <img src="./images/lap.jpg" alt="">
+                        <img src="./images/lap.jpg" alt="Image could not be displayed.">
                     </div>
                     <div class="product-details">
                         <h2 class="product-name">HP 15 Laptop</h2>
@@ -70,7 +71,7 @@
                 </div>
                 <div id="washing-machine" class="product">
                     <div class="image-container">
-                        <img src="./images/washingmachine.jpg" alt="">
+                        <img src="./images/washingmachine.jpg" alt="Image could not be displayed.">
                     </div>
                     <div class="product-details">
                         <h2 class="product-name">LG Washing Machine</h2>
@@ -87,7 +88,7 @@
                 </div>
                 <div id="ac" class="product">
                     <div class="image-container">
-                        <img src="./images/ac - Copy.jpg" alt="">
+                        <img src="./images/ac.jpg" alt="Image could not be displayed.">
                     </div>
                     <div class="product-details">
                         <h2 class="product-name">LG AC</h2>
@@ -104,7 +105,7 @@
                 </div>
                 <div id="refrigerator" class="product">
                     <div class="image-container">
-                        <img src="./images/refrigerator.jpg" alt="">
+                        <img src="./images/refrigerator.jpg" alt="Image could not be displayed.">
                     </div>
                     <div class="product-details">
                         <h2 class="product-name">Samsung Refrigerator</h2>
@@ -121,7 +122,7 @@
                 </div>
                 <div id="mixer" class="product">
                     <div class="image-container">
-                        <img src="./images/mixer.jpg" alt="">
+                        <img src="./images/mixer.jpg" alt="Image could not be displayed.">
                     </div>
                     <div class="product-details">
                         <h2 class="product-name">Philips Mixer Grinder</h2>
@@ -138,7 +139,7 @@
                 </div>
                 <div id="coffee-maker" class="product">
                     <div class="image-container">
-                        <img src="./images/coffeemaker.jpg">
+                        <img src="./images/coffeemaker.jpg" alt="Image could not be displayed.">
                     </div>
                     <div class="product-details">
                         <h2 class="product-name">GLEN Coffee Maker</h2>
@@ -155,8 +156,12 @@
                 </div>
             </div>
             <div id="cart">
-                <div id="cart-heading">CART</div>
-                <div id="cart-body"></div>
+                <div id="cart-heading">CART 
+                    <i class="fa-solid fa-cart-shopping fa-xs"></i>
+                </div>
+                <div id="cart-body">
+                    <div id="cart-elements"></div>
+                </div>
             </div>
         </div>
     </div>
