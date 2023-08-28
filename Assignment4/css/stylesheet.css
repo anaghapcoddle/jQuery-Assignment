@@ -33,7 +33,9 @@ h1 {
 }
 
 #cart {
-    background-color: rgb(188, 188, 188);;
+    background-color: rgb(188, 188, 188);
+    display: flex;
+    justify-content: center;
 }
 
 .product {
@@ -79,4 +81,8 @@ ul {
     padding-top: 10vh;
     display: grid;
     grid-template-columns: 4fr 1fr;
+}
+
+#checkout-button-container{
+    padding-top: 10px;
 }
