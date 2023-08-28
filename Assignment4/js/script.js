@@ -22,9 +22,14 @@ $(document).ready(function () {
   $(".add-to-cart").click(function () {
     let productTitle = $(this).siblings('h2').text();
     let quantity = 1;
-    if (cartItems.some(obj => obj.title === productTitle)) {
-      console.log("Yes");
-    } else {
+    let itemFound = false;
+    cartItems.forEach(item => {
+      if (item.title === productTitle) {
+        item.itemquantity++;
+        itemFound = true;
+      }
+    });
+    if (!itemFound) {
       cartItems.push({
         title: productTitle,
         itemquantity: quantity
@@ -35,7 +40,7 @@ $(document).ready(function () {
       let cartElementTitle = $("<div>");
       $("#cart-body").append(cartElementTitle);
       cartElementTitle.append(item.title);
-      let cartElementQuantity = $("<div>");
+      let cartElementQuantity = $('<div>');
       $("#cart-body").append(cartElementQuantity);
       let decrementButton = $('<input/>').attr({ type: 'button', name: 'decrementButton', value: '-' });
       cartElementQuantity.append(decrementButton);
@@ -45,6 +50,9 @@ $(document).ready(function () {
           cartElementTitle.remove();
           cartElementQuantity.remove();
           cartItems = cartItems.filter(obj => obj.title !== item.title);
+          if (cartItems.length <= 0) {
+            checkoutButton.remove();
+          }
         } else {
           quantityContainer.text(item.itemquantity);
         }
@@ -61,5 +69,12 @@ $(document).ready(function () {
         quantityContainer.text(item.itemquantity);
       });
     });
+    if (cartItems.length > 0) {
+      checkoutButtonContainer = $('<div>');
+      $("#cart-body").append(checkoutButtonContainer);
+      checkoutButtonContainer.css("padding-top", "15px");
+      checkoutButton = $('<input/>').attr({ type: 'button', name: 'checkoutButton', value: 'Check out', });
+      checkoutButtonContainer.append(checkoutButton);
+    }
   });
 });
