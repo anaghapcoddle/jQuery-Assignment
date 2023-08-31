@@ -80,9 +80,18 @@ ul {
 #cart-body{
     padding-top: 10vh;
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 3fr 1fr 1fr;
 }
 
 #checkout-button-container{
     padding-top: 10px;
+}
+
+.add-to-cart{
+    width: 150px;
+    height: 30px;
+    background-color: rgb(92, 92, 92);
+    border: none;
+    color: rgb(238, 239, 225);;
+    font-weight: bold;
 }
