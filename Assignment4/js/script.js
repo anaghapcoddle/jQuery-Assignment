@@ -25,14 +25,14 @@ $(document).ready(function () {
     const productDetails = $(this).parent();
     const productPrice = productDetails.siblings('.product-price').find('h2');
     const productPriceText = productPrice.text();
-    let productPriceTextWithoutSymbol = productPriceText.replaceAll(/[^0-9\.-]+/g,'');
-    console.log(productPriceTextWithoutSymbol);
+    let productPriceTextWithoutSymbol = Number(productPriceText.replaceAll(/[^0-9\.-]+/g,''));
 
     let quantity = 1;
     let itemFound = false;
     cartItems.forEach(item => {
       if (item.title === productTitle) {
         item.itemquantity++;
+        item.price = item.price + productPriceTextWithoutSymbol;
         itemFound = true;
       }
     });
@@ -43,20 +43,26 @@ $(document).ready(function () {
         price: productPriceTextWithoutSymbol
       });
     }
-    $("#cart-items-container").empty();
+    $("#cart-body").empty();
+    let totalAmount = 0;
     $.each(cartItems, function (index, item) {
+     
       let cartElementTitle = $("<div>");
-      $("#cart-items-container").append(cartElementTitle);
+      $("#cart-body").append(cartElementTitle);
       cartElementTitle.append(item.title);
       let cartElementQuantity = $('<div>');
-      $("#cart-items-container").append(cartElementQuantity);
+      $("#cart-body").append(cartElementQuantity);
       let decrementButton = $('<input/>').attr({ type: 'button', name: 'decrementButton', value: '-' });
       cartElementQuantity.append(decrementButton);
       decrementButton.click(function () {
         item.itemquantity = item.itemquantity - 1;
+        item.price = item.price - productPriceTextWithoutSymbol;
+        individualProductCost.text(item.price);
+
         if (item.itemquantity < 1) {
           cartElementTitle.remove();
           cartElementQuantity.remove();
+          individualProductCost.remove();
           cartItems = cartItems.filter(obj => obj.title !== item.title);
           if (cartItems.length <= 0) {
             checkoutButton.remove();
@@ -75,30 +81,55 @@ $(document).ready(function () {
       incrementButton.click(function () {
         item.itemquantity = item.itemquantity + 1;
         quantityContainer.text(item.itemquantity);
-        item.price = item.price*2;
+        item.price = item.price + productPriceTextWithoutSymbol;
         individualProductCost.text(item.price);
+
+        totalAmount = totalAmount + item.price;
+        console.log(totalAmount);
+
+        // totalAmountContainer.text(totalAmount);
+       
       });
 
       let individualProductCost = $("<span>", {
         text: item.price
       });
-      $("#cart-items-container").append(individualProductCost);
+      $("#cart-body").append(individualProductCost);
+      totalAmount = totalAmount + item.price;
 
     });
+   
+
     if (cartItems.length > 0) {
       let hrline = $('<hr>').css({
         'background-color': 'black',
         'height': '2px',
-        'width': '300px',
-        'border': 'none'
+        'width': '350px',
+        'border': 'none',
+        'grid-column': 'span 3'
       });
-      // $("#cart-items-container").innerHTML(hrline);
-      $("#cart-items-container").insertAdjacentElement("afterbegin", hrline);
-      // let checkoutButtonContainer = $('<div>');
-      // $("#cart-items-container").append(checkoutButtonContainer);
-      // checkoutButtonContainer.css("padding-top", "15px");
-      // checkoutButton = $('<input/>').attr({ type: 'button', name: 'checkoutButton', value: 'Check out', });
-      // checkoutButtonContainer.append(checkoutButton);
+      $("#cart-body").append(hrline);
+
+      let totalTextContainer = $("<div>", {
+        text: 'TOTAL'
+      });
+      $("#cart-body").append(totalTextContainer);
+
+      let totalAmountContainer = $("<div>", {
+        text: totalAmount
+      });
+
+      totalAmountContainer.css({
+        'grid-column': 'span 2'
+      });
+
+      $("#cart-body").append(totalAmountContainer);
+
+      let checkoutButtonContainer = $('<div>');
+      $("#cart-body").append(checkoutButtonContainer);
+      checkoutButtonContainer.css("padding-top", "15px");
+      checkoutButton = $('<input/>').attr({ type: 'button', name: 'checkoutButton', value: 'Check out', });
+      checkoutButtonContainer.append(checkoutButton);
     }
   });
 });

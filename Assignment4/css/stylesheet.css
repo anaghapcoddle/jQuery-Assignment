@@ -79,9 +79,6 @@ ul {
 
 #cart-body{
     padding-top: 10vh;
-}
-
-#cart-items-container{
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
 }
