@@ -2,7 +2,7 @@
 $(document).ready(function () {
   $("#searchbox").keyup(function () {
     let inputValue = $(this).val().toLowerCase();
-    var allHidden = true;
+    let allHidden = true;
     $("p").empty();
     $(".product").each(function () {
       let productName = $(this).find(".product-details .product-name").text().toLowerCase();
@@ -21,6 +21,13 @@ $(document).ready(function () {
   let cartItems = [];
   $(".add-to-cart").click(function () {
     let productTitle = $(this).siblings('h2').text();
+
+    const productDetails = $(this).parent();
+    const productPrice = productDetails.siblings('.product-price').find('h2');
+    const productPriceText = productPrice.text();
+    let productPriceTextWithoutSymbol = productPriceText.replaceAll(/[^0-9\.-]+/g,'');
+    console.log(productPriceTextWithoutSymbol);
+
     let quantity = 1;
     let itemFound = false;
     cartItems.forEach(item => {
@@ -32,16 +39,17 @@ $(document).ready(function () {
     if (!itemFound) {
       cartItems.push({
         title: productTitle,
-        itemquantity: quantity
+        itemquantity: quantity,
+        price: productPriceTextWithoutSymbol
       });
     }
-    $("#cart-body").empty();
+    $("#cart-items-container").empty();
     $.each(cartItems, function (index, item) {
       let cartElementTitle = $("<div>");
-      $("#cart-body").append(cartElementTitle);
+      $("#cart-items-container").append(cartElementTitle);
       cartElementTitle.append(item.title);
       let cartElementQuantity = $('<div>');
-      $("#cart-body").append(cartElementQuantity);
+      $("#cart-items-container").append(cartElementQuantity);
       let decrementButton = $('<input/>').attr({ type: 'button', name: 'decrementButton', value: '-' });
       cartElementQuantity.append(decrementButton);
       decrementButton.click(function () {
@@ -57,9 +65,9 @@ $(document).ready(function () {
           quantityContainer.text(item.itemquantity);
         }
       });
-      let quantityContainer = $("<span>", {
+      let quantityContainer = $('<span>', {
         text: item.itemquantity,
-        id: "Quantity-container"
+        id: 'Quantity-container'
       });
       cartElementQuantity.append(quantityContainer);
       let incrementButton = $('<input/>').attr({ type: 'button', name: 'incrementButton', value: '+' });
@@ -67,14 +75,30 @@ $(document).ready(function () {
       incrementButton.click(function () {
         item.itemquantity = item.itemquantity + 1;
         quantityContainer.text(item.itemquantity);
+        item.price = item.price*2;
+        individualProductCost.text(item.price);
       });
+
+      let individualProductCost = $("<span>", {
+        text: item.price
+      });
+      $("#cart-items-container").append(individualProductCost);
+
     });
     if (cartItems.length > 0) {
-      checkoutButtonContainer = $('<div>');
-      $("#cart-body").append(checkoutButtonContainer);
-      checkoutButtonContainer.css("padding-top", "15px");
-      checkoutButton = $('<input/>').attr({ type: 'button', name: 'checkoutButton', value: 'Check out', });
-      checkoutButtonContainer.append(checkoutButton);
+      let hrline = $('<hr>').css({
+        'background-color': 'black',
+        'height': '2px',
+        'width': '300px',
+        'border': 'none'
+      });
+      // $("#cart-items-container").innerHTML(hrline);
+      $("#cart-items-container").insertAdjacentElement("afterbegin", hrline);
+      // let checkoutButtonContainer = $('<div>');
+      // $("#cart-items-container").append(checkoutButtonContainer);
+      // checkoutButtonContainer.css("padding-top", "15px");
+      // checkoutButton = $('<input/>').attr({ type: 'button', name: 'checkoutButton', value: 'Check out', });
+      // checkoutButtonContainer.append(checkoutButton);
     }
   });
 });
