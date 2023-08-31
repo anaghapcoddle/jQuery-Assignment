@@ -19,20 +19,20 @@ $(document).ready(function () {
     }
   })
   let cartItems = [];
+  let totalAmountContainer;
   $(".add-to-cart").click(function () {
     let productTitle = $(this).siblings('h2').text();
-
     const productDetails = $(this).parent();
     const productPrice = productDetails.siblings('.product-price').find('h2');
     const productPriceText = productPrice.text();
-    let productPriceTextWithoutSymbol = Number(productPriceText.replaceAll(/[^0-9\.-]+/g,''));
+    let productPriceTextWithoutSymbol = Number(productPriceText.replaceAll(/[^0-9\.-]+/g, ''));
 
     let quantity = 1;
     let itemFound = false;
     cartItems.forEach(item => {
       if (item.title === productTitle) {
         item.itemquantity++;
-        item.price = item.price + productPriceTextWithoutSymbol;
+        item.productTotalAmount = item.productTotalAmount + productPriceTextWithoutSymbol
         itemFound = true;
       }
     });
@@ -40,13 +40,13 @@ $(document).ready(function () {
       cartItems.push({
         title: productTitle,
         itemquantity: quantity,
-        price: productPriceTextWithoutSymbol
+        price: productPriceTextWithoutSymbol,
+        productTotalAmount: productPriceTextWithoutSymbol
       });
     }
     $("#cart-body").empty();
     let totalAmount = 0;
     $.each(cartItems, function (index, item) {
-     
       let cartElementTitle = $("<div>");
       $("#cart-body").append(cartElementTitle);
       cartElementTitle.append(item.title);
@@ -56,9 +56,12 @@ $(document).ready(function () {
       cartElementQuantity.append(decrementButton);
       decrementButton.click(function () {
         item.itemquantity = item.itemquantity - 1;
-        item.price = item.price - productPriceTextWithoutSymbol;
-        individualProductCost.text(item.price);
-
+        quantityContainer.text(item.itemquantity);
+        item.productTotalAmount = item.productTotalAmount - item.price;
+        individualProductCost.text(item.productTotalAmount);
+        totalAmount = totalAmount - item.price;
+        totalAmountContainer.text(totalAmount);
+        console.log(totalAmount);
         if (item.itemquantity < 1) {
           cartElementTitle.remove();
           cartElementQuantity.remove();
@@ -81,25 +84,19 @@ $(document).ready(function () {
       incrementButton.click(function () {
         item.itemquantity = item.itemquantity + 1;
         quantityContainer.text(item.itemquantity);
-        item.price = item.price + productPriceTextWithoutSymbol;
-        individualProductCost.text(item.price);
 
+        item.productTotalAmount = item.productTotalAmount + item.price;
+        individualProductCost.text(item.productTotalAmount);
         totalAmount = totalAmount + item.price;
         console.log(totalAmount);
-
-        // totalAmountContainer.text(totalAmount);
-       
+        totalAmountContainer.text(totalAmount);
       });
-
       let individualProductCost = $("<span>", {
-        text: item.price
+        text: item.productTotalAmount
       });
       $("#cart-body").append(individualProductCost);
-      totalAmount = totalAmount + item.price;
-
+      totalAmount = totalAmount + item.productTotalAmount;
     });
-   
-
     if (cartItems.length > 0) {
       let hrline = $('<hr>').css({
         'background-color': 'black',
@@ -109,22 +106,18 @@ $(document).ready(function () {
         'grid-column': 'span 3'
       });
       $("#cart-body").append(hrline);
-
       let totalTextContainer = $("<div>", {
         text: 'TOTAL'
       });
       $("#cart-body").append(totalTextContainer);
-
       let totalAmountContainer = $("<div>", {
-        text: totalAmount
+        text: totalAmount,
+        id: 'totalAmountContainer'
       });
-
       totalAmountContainer.css({
         'grid-column': 'span 2'
       });
-
       $("#cart-body").append(totalAmountContainer);
-
       let checkoutButtonContainer = $('<div>');
       $("#cart-body").append(checkoutButtonContainer);
       checkoutButtonContainer.css("padding-top", "15px");
