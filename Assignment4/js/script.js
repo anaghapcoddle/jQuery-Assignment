@@ -19,7 +19,6 @@ $(document).ready(function () {
     }
   })
   let cartItems = [];
-  let totalAmountContainer;
   $(".add-to-cart").click(function () {
     let productTitle = $(this).siblings('h2').text();
     const productDetails = $(this).parent();
@@ -46,6 +45,38 @@ $(document).ready(function () {
     }
     $("#cart-body").empty();
     let totalAmount = 0;
+    let hrline = $('<hr>').css({
+      'background-color': 'black',
+      'height': '2px',
+      'width': '350px',
+      'border': 'none',
+      'grid-column': 'span 3'
+    });
+    let totalTextContainer = $("<div>", {
+      text: 'TOTAL'
+    });
+    let totalAmountContainer = $("<div>", {
+      text: totalAmount,
+      id: 'totalAmountContainer'
+    });
+    totalAmountContainer.css({
+      'grid-column': 'span 2'
+    });
+    let checkoutButtonContainer = $('<div>');
+    checkoutButtonContainer.css("padding-top", "15px");
+    checkoutButton = $('<input/>').attr({ type: 'button', name: 'checkoutButton', value: 'Check out', });
+    let productTitleHeading = $("<div>", {
+      text: 'Product Name'
+    });
+    $("#cart-body").append(productTitleHeading);
+    let productQuantityHeading = $("<div>", {
+      text: 'Product Quantity'
+    });
+    $("#cart-body").append(productQuantityHeading);
+    let productPriceHeading = $("<div>", {
+      text: 'Product Price'
+    });
+    $("#cart-body").append(productPriceHeading);
     $.each(cartItems, function (index, item) {
       let cartElementTitle = $("<div>");
       $("#cart-body").append(cartElementTitle);
@@ -60,8 +91,8 @@ $(document).ready(function () {
         item.productTotalAmount = item.productTotalAmount - item.price;
         individualProductCost.text(item.productTotalAmount);
         totalAmount = totalAmount - item.price;
-        totalAmountContainer.text(totalAmount);
         console.log(totalAmount);
+        totalAmountContainer.text(totalAmount);
         if (item.itemquantity < 1) {
           cartElementTitle.remove();
           cartElementQuantity.remove();
@@ -69,6 +100,12 @@ $(document).ready(function () {
           cartItems = cartItems.filter(obj => obj.title !== item.title);
           if (cartItems.length <= 0) {
             checkoutButton.remove();
+            hrline.remove();
+            totalTextContainer.remove();
+            totalAmountContainer.remove();
+            productTitleHeading.remove();
+            productQuantityHeading.remove();
+            productPriceHeading.remove();
           }
         } else {
           quantityContainer.text(item.itemquantity);
@@ -76,7 +113,7 @@ $(document).ready(function () {
       });
       let quantityContainer = $('<span>', {
         text: item.itemquantity,
-        id: 'Quantity-container'
+        id: 'Quantity-container',
       });
       cartElementQuantity.append(quantityContainer);
       let incrementButton = $('<input/>').attr({ type: 'button', name: 'incrementButton', value: '+' });
@@ -84,7 +121,6 @@ $(document).ready(function () {
       incrementButton.click(function () {
         item.itemquantity = item.itemquantity + 1;
         quantityContainer.text(item.itemquantity);
-
         item.productTotalAmount = item.productTotalAmount + item.price;
         individualProductCost.text(item.productTotalAmount);
         totalAmount = totalAmount + item.price;
@@ -96,32 +132,13 @@ $(document).ready(function () {
       });
       $("#cart-body").append(individualProductCost);
       totalAmount = totalAmount + item.productTotalAmount;
+      totalAmountContainer.text(totalAmount);
     });
     if (cartItems.length > 0) {
-      let hrline = $('<hr>').css({
-        'background-color': 'black',
-        'height': '2px',
-        'width': '350px',
-        'border': 'none',
-        'grid-column': 'span 3'
-      });
       $("#cart-body").append(hrline);
-      let totalTextContainer = $("<div>", {
-        text: 'TOTAL'
-      });
       $("#cart-body").append(totalTextContainer);
-      let totalAmountContainer = $("<div>", {
-        text: totalAmount,
-        id: 'totalAmountContainer'
-      });
-      totalAmountContainer.css({
-        'grid-column': 'span 2'
-      });
       $("#cart-body").append(totalAmountContainer);
-      let checkoutButtonContainer = $('<div>');
       $("#cart-body").append(checkoutButtonContainer);
-      checkoutButtonContainer.css("padding-top", "15px");
-      checkoutButton = $('<input/>').attr({ type: 'button', name: 'checkoutButton', value: 'Check out', });
       checkoutButtonContainer.append(checkoutButton);
     }
   });

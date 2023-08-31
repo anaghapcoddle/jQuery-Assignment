@@ -78,9 +78,10 @@ ul {
 }
 
 #cart-body{
-    padding-top: 10vh;
+    padding-top: 80px;
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 2fr 1.5fr 1.5fr;
+    grid-gap: 10px;
 }
 
 #checkout-button-container{
