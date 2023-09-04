@@ -76,10 +76,6 @@ img {
     position: fixed;
     padding-top: 2vh;
     font-size: xx-large;
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-content: center; */
-    /* text-align: center; */
 }
 
 #cart-body {
