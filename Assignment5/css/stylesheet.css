@@ -69,13 +69,17 @@ img {
     background-color: rgb(188, 188, 188);
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 #cart-heading {
     position: fixed;
     padding-top: 2vh;
     font-size: xx-large;
-    text-align: center;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-content: center; */
+    /* text-align: center; */
 }
 
 #cart-body {
