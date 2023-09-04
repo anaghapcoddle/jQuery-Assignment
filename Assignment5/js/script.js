@@ -8,11 +8,15 @@ $(document).ready(function () {
         method: "GET",
         success: function (data) {
             arrayOfProducts = data.products;
+
+            let arrayWith3Items = arrayOfProducts.slice(0, 3);
+            console.log(arrayWith3Items);
+
             let productsContainer = $('#products-container');
 
-            function displayProducts() {
+            function displayProducts(arr) {
                 productsContainer.empty();
-                $.each(arrayOfProducts, function (index, item) {
+                $.each(arr, function (index, item) {
                     let arrayOfImages = item.images;
                     let selectedIndex = 0;
                     function updateImg(type) {
@@ -60,7 +64,6 @@ $(document).ready(function () {
                     $(".prevbtn", productContainer).click(function () {
                         updateImg('0');
                     });
-
                     $(".nextbtn", productContainer).click(function () {
                         updateImg('1');
                     });
@@ -68,7 +71,12 @@ $(document).ready(function () {
                 });
             }
 
-            displayProducts();
+            displayProducts(arrayWith3Items);
+
+            $(window).scroll(function () {
+                console.log("scrolled");
+                displayProducts(arrayOfProducts);
+            });
 
             $("#searchbox").keyup(function () {
                 let inputValue = $(this).val().toLowerCase();
@@ -108,8 +116,8 @@ $(document).ready(function () {
             });
 
             $('#filter').change(function () {
-                var selectedCategory = $(this).val();
-                console.log(selectedCategory);
+                let selectedCategory = $(this).val();
+                // console.log(selectedCategory);
                 $('.product').hide();
                 if (selectedCategory === 'allcategories') {
                     $('.product').show();
@@ -120,12 +128,13 @@ $(document).ready(function () {
             });
 
             let cartItems = [];
-            $(".add-to-cart").click(function () {
+            $('#products-container').on('click', '.add-to-cart', function () {
+                console.log("Added to cart")
                 let productTitle = $(this).siblings('h2').text();
-                console.log(productTitle)
-                const productDetailsBlock1 = $(this).parent();
-                const productPrice = productDetailsBlock1.siblings('.product-details-block2').find('h2');
-                const productPriceText = productPrice.text();
+                // console.log(productTitle)
+                let productDetailsBlock1 = $(this).parent();
+                let productPrice = productDetailsBlock1.siblings('.product-details-block2').find('h2');
+                let productPriceText = productPrice.text();
                 let productPriceTextWithoutSymbol = Number(productPriceText.replaceAll(/[^0-9\.-]+/g, ''));
 
                 let quantity = 1;
@@ -191,7 +200,7 @@ $(document).ready(function () {
                         item.productTotalAmount = item.productTotalAmount - item.price;
                         individualProductCost.text(item.productTotalAmount);
                         totalAmount = totalAmount - item.price;
-                        console.log(totalAmount);
+                        // console.log(totalAmount);
                         totalAmountContainer.text(totalAmount);
                         if (item.itemquantity < 1) {
                             cartElementTitle.remove();
@@ -224,7 +233,7 @@ $(document).ready(function () {
                         item.productTotalAmount = item.productTotalAmount + item.price;
                         individualProductCost.text(item.productTotalAmount);
                         totalAmount = totalAmount + item.price;
-                        console.log(totalAmount);
+                        // console.log(totalAmount);
                         totalAmountContainer.text(totalAmount);
                     });
                     let individualProductCost = $("<span>", {
