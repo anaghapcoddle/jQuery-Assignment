@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment5</title>
+    <link rel="stylesheet" href="./css/stylesheet.css">
+    <script src="./js/jquery-3.7.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/3f87ddcdd4.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <h1>SHOP EASY</h1>
+        <input type="text" name="searchbox" id="searchbox" placeholder="Search here">
+    </header>
+    <div class="shopping-page-body">
+        <div id="content">
+            <nav>
+                <select name="sort" id="sort">
+                    <option selected hidden="SORT">SORT</option>
+                    <option value="lowtohigh">Price: Low to High</option>
+                    <option value="hightolow">Price: High to Low</option>
+                    <option value="productrating">Product rating</option>
+                </select>
+                <select name="filter" id="filter">
+                    <option selected hidden>FILTER</option>
+                    <option value="allcategories">All categories</option>
+                    <option value="smartphones">Smartphones</option>
+                    <option value="laptops">Laptops</option>
+                    <option value="fragrances">Fragrances</option>
+                    <option value="skincare">Skincare</option>
+                    <option value="groceries">Groceries</option>
+                    <option value="home-decoration">Home-decoration</option>
+                </select>
+            </nav>
+            <div id="products-container">
+                
+            </div>
+        </div>
+        <aside id="cart">
+            <div id="cart-heading">CART
+                <i class="fa-solid fa-cart-shopping fa-xs"></i>
+            </div>
+            <div id="cart-body">
+            </div>
+        </aside>
+        <script type="text/javascript" src="./js/script.js"></script>
+</body>
+
+</html>
