@@ -7,10 +7,7 @@ $(document).ready(function () {
         url: "https://dummyjson.com/products",
         method: "GET",
         success: function (data) {
-            arrayOfProducts = data.products;
-
-            let arrayWith3Items = arrayOfProducts.slice(0, 3);
-            console.log(arrayWith3Items);
+            let arrayOfProducts = data.products;
 
             let productsContainer = $('#products-container');
 
@@ -59,7 +56,7 @@ $(document).ready(function () {
                         </div>
                     `;
 
-                    let productContainer = $(productItem);
+                    let productContainer = $(productItem).hide();
 
                     $(".prevbtn", productContainer).click(function () {
                         updateImg('0');
@@ -71,11 +68,29 @@ $(document).ready(function () {
                 });
             }
 
-            displayProducts(arrayWith3Items);
+            displayProducts(arrayOfProducts);
+
+            function displayVisibleProducts(itemsToDisplay) {
+
+                $(".product").each(function (index) {
+                    
+                    if (index < itemsToDisplay) {
+                        $(this).show(); 
+                    }  
+                 
+                });
+            }
+
+            let initialNumberOfProducts = 3;
+            displayVisibleProducts(initialNumberOfProducts);
 
             $(window).scroll(function () {
-                console.log("scrolled");
-                displayProducts(arrayOfProducts);
+                console.log("scroll top",$(window).scrollTop(),"window height",$(window).height(),"document height",$(document).height());
+                if($(window).scrollTop() + $(window).height() + 1 >= $(document).height()){
+                    initialNumberOfProducts = initialNumberOfProducts + 3;
+                    displayVisibleProducts(initialNumberOfProducts);
+                    console.log(initialNumberOfProducts)
+                }
             });
 
             $("#searchbox").keyup(function () {
@@ -98,6 +113,13 @@ $(document).ready(function () {
             })
 
             $('#sort').change(function () {
+
+                // $(".product").each(function () {
+                //         $(this).show();
+                // });
+
+                // $('.product').hide();
+
                 let selectedOption = $(this).val();
                 if (selectedOption === 'lowtohigh') {
                     arrayOfProducts.sort(function (a, b) {
