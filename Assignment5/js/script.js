@@ -7,14 +7,11 @@ $(document).ready(function () {
         url: "https://dummyjson.com/products",
         method: "GET",
         success: function (data) {
-            arrayOfProducts = data.products;
-
-            let arrayWith3Items = arrayOfProducts.slice(0, 3);
-            console.log(arrayWith3Items);
+            let arrayOfProducts = data.products;
 
             let productsContainer = $('#products-container');
 
-            function displayProducts(arr) {
+            function insertProducts(arr) {
                 productsContainer.empty();
                 $.each(arr, function (index, item) {
                     let arrayOfImages = item.images;
@@ -59,8 +56,7 @@ $(document).ready(function () {
                         </div>
                     `;
 
-                    let productContainer = $(productItem);
-
+                    let productContainer = $(productItem).hide();
                     $(".prevbtn", productContainer).click(function () {
                         updateImg('0');
                     });
@@ -71,17 +67,34 @@ $(document).ready(function () {
                 });
             }
 
-            displayProducts(arrayWith3Items);
+            insertProducts(arrayOfProducts);
+
+            function displayProducts(itemsToDisplay) {
+                $(".product").each(function (index) {
+                    if (index < itemsToDisplay) {
+                        $(this).show();
+                    }
+                });
+            }
+
+            let initialNumberOfProducts = 3;
+            displayProducts(initialNumberOfProducts);
 
             $(window).scroll(function () {
-                console.log("scrolled");
-                displayProducts(arrayOfProducts);
+                //console.log("scroll top",$(window).scrollTop(),"window height",$(window).height(),"document height",$(document).height());
+                if (($('#filter').val()) == 'FILTER') {
+                    if ($(window).scrollTop() + $(window).height() + 1 >= $(document).height()) {
+                        initialNumberOfProducts = initialNumberOfProducts + 3;
+                        displayProducts(initialNumberOfProducts);
+                        console.log(initialNumberOfProducts)
+                    }
+                }
             });
-
+            // $("#products-container").append("<p>No products to show.</p>")
             $("#searchbox").keyup(function () {
                 let inputValue = $(this).val().toLowerCase();
                 let allHidden = true;
-                $("p").empty();
+                $(".no-search-result").remove();
                 $(".product").each(function () {
                     let productName = $(this).find(".product-details-block1 .product-title").text().toLowerCase();
                     if (productName.includes(inputValue)) {
@@ -93,38 +106,56 @@ $(document).ready(function () {
                     }
                 });
                 if (allHidden) {
-                    $("#products-container").append("<p>No products to show.</p>")
+                    let noSearchResult = "<p class='no-search-result'>No matching products found.</p>";
+                    $("#products-container").prepend(noSearchResult);
                 }
             })
 
-            $('#sort').change(function () {
-                let selectedOption = $(this).val();
-                if (selectedOption === 'lowtohigh') {
+            function sort(optionSelected) {
+                if (optionSelected === 'lowtohigh') {
                     arrayOfProducts.sort(function (a, b) {
                         return a.price - b.price;
                     });
-                } else if (selectedOption === 'hightolow') {
+                    console.log("Low to high");
+                } else if (optionSelected === 'hightolow') {
                     arrayOfProducts.sort(function (a, b) {
                         return b.price - a.price;
                     });
-                } else if (selectedOption === 'productrating') {
+                    console.log("high to low");
+                } else if (optionSelected === 'productrating') {
                     arrayOfProducts.sort(function (a, b) {
                         return b.rating - a.rating;
                     });
+                    console.log("product rating");
                 }
-                displayProducts(arrayOfProducts);
+                insertProducts(arrayOfProducts);
+                displayProducts(initialNumberOfProducts);
+                //console.log($('#filter').val())
+                if (($('#filter').val()) !== 'FILTER') {
+                    filter($('#filter').val());
+                }
+            }
+
+            $('#sort').change(function () {
+                let selectedOption = $(this).val();
+                sort(selectedOption);
             });
+
+            function filter(categorySelected) {
+                // console.log(selectedCategory);
+                $('.product').hide();
+                if (categorySelected === 'allcategories') {
+                    $('.product').show();
+                }
+                else {
+                    $('.' + categorySelected).show();
+                }
+            }
 
             $('#filter').change(function () {
                 let selectedCategory = $(this).val();
                 // console.log(selectedCategory);
-                $('.product').hide();
-                if (selectedCategory === 'allcategories') {
-                    $('.product').show();
-                }
-                else {
-                    $('.' + selectedCategory).show();
-                }
+                filter(selectedCategory);
             });
 
             let cartItems = [];
@@ -251,7 +282,6 @@ $(document).ready(function () {
                     checkoutButtonContainer.append(checkoutButton);
                 }
             });
-
         }
     });
 });
