@@ -8,9 +8,7 @@ $(document).ready(function () {
         method: "GET",
         success: function (data) {
             let arrayOfProducts = data.products;
-
             let productsContainer = $('#products-container');
-
             function insertProducts(arr) {
                 productsContainer.empty();
                 $.each(arr, function (index, item) {
@@ -28,7 +26,7 @@ $(document).ready(function () {
                         } else if (selectedIndex >= arrayOfImages.length) {
                             selectedIndex = 0;
                         }
-                        $(".product-image", productContainer).attr("src", arrayOfImages[selectedIndex]);
+                        $(".product-image",productContainer).attr("src", arrayOfImages[selectedIndex]);
                     }
 
                     let productItem = `
@@ -57,6 +55,7 @@ $(document).ready(function () {
                     `;
 
                     let productContainer = $(productItem).hide();
+                    $(productItem).hide();
                     $(".prevbtn", productContainer).click(function () {
                         updateImg('0');
                     });
@@ -68,9 +67,8 @@ $(document).ready(function () {
             }
 
             insertProducts(arrayOfProducts);
-
-            function displayProducts(itemsToDisplay) {
-                $(".product").each(function (index) {
+            function displayProducts(itemsToDisplay,productList) {
+                $.each(productList,function (index) {
                     if (index < itemsToDisplay) {
                         $(this).show();
                     }
@@ -78,19 +76,20 @@ $(document).ready(function () {
             }
 
             let initialNumberOfProducts = 3;
-            displayProducts(initialNumberOfProducts);
+            displayProducts(initialNumberOfProducts,$(".product"));
+            function scroll(productList) {
+                if ($(window).scrollTop() + $(window).height() + 1 >= $(document).height()) {
+                    initialNumberOfProducts = initialNumberOfProducts + 3;
+                    displayProducts(initialNumberOfProducts,productList);
+                }
+            }
 
             $(window).scroll(function () {
-                //console.log("scroll top",$(window).scrollTop(),"window height",$(window).height(),"document height",$(document).height());
-                if (($('#filter').val()) == 'FILTER') {
-                    if ($(window).scrollTop() + $(window).height() + 1 >= $(document).height()) {
-                        initialNumberOfProducts = initialNumberOfProducts + 3;
-                        displayProducts(initialNumberOfProducts);
-                        console.log(initialNumberOfProducts)
-                    }
+                if (($('#filter').val() == 'FILTER') || ($('#filter').val() == 'allcategories')) {
+                    scroll($(".product"));
                 }
             });
-            // $("#products-container").append("<p>No products to show.</p>")
+
             $("#searchbox").keyup(function () {
                 let inputValue = $(this).val().toLowerCase();
                 let allHidden = true;
@@ -129,35 +128,35 @@ $(document).ready(function () {
                     console.log("product rating");
                 }
                 insertProducts(arrayOfProducts);
-                displayProducts(initialNumberOfProducts);
+                displayProducts(initialNumberOfProducts,$(".product"));
                 //console.log($('#filter').val())
                 if (($('#filter').val()) !== 'FILTER') {
                     filter($('#filter').val());
                 }
             }
-
             $('#sort').change(function () {
                 let selectedOption = $(this).val();
                 sort(selectedOption);
             });
-
+            // console.log(initialNumberOfProducts);
             function filter(categorySelected) {
-                // console.log(selectedCategory);
-                $('.product').hide();
-                if (categorySelected === 'allcategories') {
-                    $('.product').show();
+                if (categorySelected == 'allcategories') {
+                    displayProducts(initialNumberOfProducts,$(".product"));
+                    // console.log(arrayOfProducts);
                 }
                 else {
-                    $('.' + categorySelected).show();
+                    $('.product').hide();
+                    displayProducts(initialNumberOfProducts,$('.' + categorySelected));
+                    $(window).scroll(function () {
+                        scroll($('.' + categorySelected));
+                    });
                 }
             }
-
             $('#filter').change(function () {
                 let selectedCategory = $(this).val();
                 // console.log(selectedCategory);
                 filter(selectedCategory);
             });
-
             let cartItems = [];
             $('#products-container').on('click', '.add-to-cart', function () {
                 console.log("Added to cart")
@@ -195,13 +194,9 @@ $(document).ready(function () {
                     text: totalAmount,
                     id: 'totalAmountContainer'
                 });
-                totalAmountContainer.css({
-                    'grid-column': 'span 2'
-                });
                 let checkoutButtonContainer = $('<div>');
                 checkoutButtonContainer.css("padding-top", "15px");
                 checkoutButton = $('<input/>').attr({ type: 'button', name: 'checkoutButton', value: 'Check out', });
-
                 let productTitleHeading = $("<div>", {
                     text: 'Product Name',
                     class: 'heading'

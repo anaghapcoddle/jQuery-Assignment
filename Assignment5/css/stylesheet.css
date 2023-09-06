@@ -148,3 +148,13 @@ margin-left: 2px;
 .no-search-result{
     text-align: center;
 }
+
+#totalAmountContainer{
+    grid-column: span 2;
+}
+
+.heading{
+    height: 30px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+}
