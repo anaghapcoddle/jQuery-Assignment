@@ -11,7 +11,7 @@ $(document).ready(function () {
 
             let productsContainer = $('#products-container');
 
-            function displayProducts(arr) {
+            function insertProducts(arr) {
                 productsContainer.empty();
                 $.each(arr, function (index, item) {
                     let arrayOfImages = item.images;
@@ -57,7 +57,6 @@ $(document).ready(function () {
                     `;
 
                     let productContainer = $(productItem).hide();
-
                     $(".prevbtn", productContainer).click(function () {
                         updateImg('0');
                     });
@@ -68,27 +67,24 @@ $(document).ready(function () {
                 });
             }
 
-            displayProducts(arrayOfProducts);
+            insertProducts(arrayOfProducts);
 
-            function displayVisibleProducts(itemsToDisplay) {
-
-                $(".product").each(function (index) {
-                    
+            function displayProducts(itemsToDisplay) {
+                $(".product").each(function (index) {  
                     if (index < itemsToDisplay) {
                         $(this).show(); 
-                    }  
-                 
+                    }      
                 });
             }
 
             let initialNumberOfProducts = 3;
-            displayVisibleProducts(initialNumberOfProducts);
+            displayProducts(initialNumberOfProducts);
 
             $(window).scroll(function () {
                 console.log("scroll top",$(window).scrollTop(),"window height",$(window).height(),"document height",$(document).height());
                 if($(window).scrollTop() + $(window).height() + 1 >= $(document).height()){
                     initialNumberOfProducts = initialNumberOfProducts + 3;
-                    displayVisibleProducts(initialNumberOfProducts);
+                    displayProducts(initialNumberOfProducts);
                     console.log(initialNumberOfProducts)
                 }
             });
@@ -113,28 +109,25 @@ $(document).ready(function () {
             })
 
             $('#sort').change(function () {
-
-                // $(".product").each(function () {
-                //         $(this).show();
-                // });
-
-                // $('.product').hide();
-
                 let selectedOption = $(this).val();
                 if (selectedOption === 'lowtohigh') {
                     arrayOfProducts.sort(function (a, b) {
                         return a.price - b.price;
                     });
+                    console.log("Low to high");
                 } else if (selectedOption === 'hightolow') {
                     arrayOfProducts.sort(function (a, b) {
                         return b.price - a.price;
                     });
+                    console.log("high to low");
                 } else if (selectedOption === 'productrating') {
                     arrayOfProducts.sort(function (a, b) {
                         return b.rating - a.rating;
                     });
+                    console.log("product rating");
                 }
-                displayProducts(arrayOfProducts);
+                insertProducts(arrayOfProducts);
+                displayProducts(initialNumberOfProducts);
             });
 
             $('#filter').change(function () {
@@ -273,7 +266,6 @@ $(document).ready(function () {
                     checkoutButtonContainer.append(checkoutButton);
                 }
             });
-
         }
     });
 });
