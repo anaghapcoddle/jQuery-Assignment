@@ -26,9 +26,8 @@ $(document).ready(function () {
                         } else if (selectedIndex >= arrayOfImages.length) {
                             selectedIndex = 0;
                         }
-                        $(".product-image",productContainer).attr("src", arrayOfImages[selectedIndex]);
+                        $(".product-image", productContainer).attr("src", arrayOfImages[selectedIndex]);
                     }
-
                     let productItem = `
                         <div class="product ${item.category}">
                             <div class="image-slider-container">
@@ -53,7 +52,6 @@ $(document).ready(function () {
                             </div>
                         </div>
                     `;
-
                     let productContainer = $(productItem).hide();
                     $(productItem).hide();
                     $(".prevbtn", productContainer).click(function () {
@@ -65,36 +63,31 @@ $(document).ready(function () {
                     productsContainer.append(productContainer);
                 });
             }
-
             insertProducts(arrayOfProducts);
-            function displayProducts(itemsToDisplay,productList) {
-                $.each(productList,function (index) {
+            function displayProducts(itemsToDisplay, productList) {
+                $.each(productList, function (index) {
                     if (index < itemsToDisplay) {
                         $(this).show();
                     }
                 });
             }
-
             let initialNumberOfProducts = 3;
-            displayProducts(initialNumberOfProducts,$(".product"));
+            displayProducts(initialNumberOfProducts, $(".product"));
             function scroll(productList) {
                 if ($(window).scrollTop() + $(window).height() + 1 >= $(document).height()) {
                     initialNumberOfProducts = initialNumberOfProducts + 3;
-                    displayProducts(initialNumberOfProducts,productList);
+                    displayProducts(initialNumberOfProducts, productList);
                 }
             }
-
             $(window).scroll(function () {
                 if (($('#filter').val() == 'FILTER') || ($('#filter').val() == 'allcategories')) {
                     scroll($(".product"));
                 }
             });
-
-            $("#searchbox").keyup(function () {
-                let inputValue = $(this).val().toLowerCase();
+            function search(inputValue, productList) {
                 let allHidden = true;
                 $(".no-search-result").remove();
-                $(".product").each(function () {
+                productList.each(function () {
                     let productName = $(this).find(".product-details-block1 .product-title").text().toLowerCase();
                     if (productName.includes(inputValue)) {
                         $(this).show();
@@ -108,8 +101,19 @@ $(document).ready(function () {
                     let noSearchResult = "<p class='no-search-result'>No matching products found.</p>";
                     $("#products-container").prepend(noSearchResult);
                 }
-            })
-
+            }
+            $("#searchbox").keyup(function () {
+                let inputValue = $(this).val().toLowerCase();
+                let catSelected = $('#filter').val();
+                if (catSelected == 'FILTER' || catSelected == 'allcategories') {
+                    search(inputValue, $(".product"));
+                    console.log("cat not selected");
+                }
+                else {
+                    search(inputValue, $('.' + catSelected));
+                    console.log("cat selected", catSelected);
+                }
+            });
             function sort(optionSelected) {
                 if (optionSelected === 'lowtohigh') {
                     arrayOfProducts.sort(function (a, b) {
@@ -128,7 +132,7 @@ $(document).ready(function () {
                     console.log("product rating");
                 }
                 insertProducts(arrayOfProducts);
-                displayProducts(initialNumberOfProducts,$(".product"));
+                displayProducts(initialNumberOfProducts, $(".product"));
                 //console.log($('#filter').val())
                 if (($('#filter').val()) !== 'FILTER') {
                     filter($('#filter').val());
@@ -141,12 +145,12 @@ $(document).ready(function () {
             // console.log(initialNumberOfProducts);
             function filter(categorySelected) {
                 if (categorySelected == 'allcategories') {
-                    displayProducts(initialNumberOfProducts,$(".product"));
+                    displayProducts(initialNumberOfProducts, $(".product"));
                     // console.log(arrayOfProducts);
                 }
                 else {
                     $('.product').hide();
-                    displayProducts(initialNumberOfProducts,$('.' + categorySelected));
+                    displayProducts(initialNumberOfProducts, $('.' + categorySelected));
                     $(window).scroll(function () {
                         scroll($('.' + categorySelected));
                     });
@@ -161,12 +165,10 @@ $(document).ready(function () {
             $('#products-container').on('click', '.add-to-cart', function () {
                 console.log("Added to cart")
                 let productTitle = $(this).siblings('h2').text();
-                // console.log(productTitle)
                 let productDetailsBlock1 = $(this).parent();
                 let productPrice = productDetailsBlock1.siblings('.product-details-block2').find('h2');
                 let productPriceText = productPrice.text();
                 let productPriceTextWithoutSymbol = Number(productPriceText.replaceAll(/[^0-9\.-]+/g, ''));
-
                 let quantity = 1;
                 let itemFound = false;
                 cartItems.forEach(item => {
