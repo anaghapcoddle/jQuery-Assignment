@@ -20,7 +20,6 @@ $(document).ready(function () {
                         } else {
                             selectedIndex += 1;
                         }
-
                         if (selectedIndex < 0) {
                             selectedIndex = arrayOfImages.length - 1;
                         } else if (selectedIndex >= arrayOfImages.length) {
